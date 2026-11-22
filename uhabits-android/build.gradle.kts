@@ -56,7 +56,7 @@ android {
         minSdk = 28
         targetSdk = 36
         applicationId = "org.isoron.uhabits"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.kaspersky.kaspresso.runner.KaspressoRunner"
     }
 
     signingConfigs {
@@ -133,6 +133,8 @@ dependencies {
     androidTestImplementation(libs.espresso.contrib)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.kaspresso)
+    androidTestImplementation(libs.kaspresso.allure.support)
     androidTestImplementation(libs.ktor.client.mock)
     androidTestImplementation(libs.ktor.jackson)
     androidTestImplementation(libs.rules)

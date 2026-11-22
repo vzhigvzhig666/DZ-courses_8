@@ -18,6 +18,21 @@ source.
   <a href="https://f-droid.org/app/org.isoron.uhabits"><img alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png" height="80px"/></a>
 </p>
 
+## UI-тесты
+
+Три сценария на Kotlin и Kaspresso — создание, редактирование и удаление привычки с проверкой отмены
+
+Запуск на Android-эмуляторе с JDK 17 и Android SDK 36
+
+```sh
+./gradlew :uhabits-android:connectedDebugAndroidTest \
+  -Pandroid.testInstrumentationRunnerArguments.class=org.isoron.uhabits.homework.HabitFlowsTest
+```
+
+На Pixel 9 Pro XL с Android 15 прошли все три теста
+
+[Отчёт Allure](reports/allure.html) можно скачать и открыть в браузере
+
 ## Screenshots
 
 [![Main screen][screen1th]][screen1]
