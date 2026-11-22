@@ -1,0 +1,125 @@
+/*
+ * Copyright (C) 2016-2025 Álinson Santos Xavier <git@axavier.org>
+ *
+ * This file is part of Loop Habit Tracker.
+ *
+ * Loop Habit Tracker is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * Loop Habit Tracker is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.isoron.uhabits.activities.habits.list.views
+
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
+import org.isoron.uhabits.BaseViewTest
+import org.isoron.uhabits.utils.PaletteUtils
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+
+@RunWith(AndroidJUnit4::class)
+@MediumTest
+class NumberButtonViewTest : BaseViewTest() {
+
+    private val PATH = "habits/list/NumberButtonView"
+    private lateinit var view: NumberButtonView
+    private var color: Int = 0
+    private lateinit var units: String
+    var edited = false
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+        color = PaletteUtils.getAndroidTestColor(8)
+        units = "steps"
+        view = component.getNumberButtonViewFactory().create().apply {
+            onEdit = { edited = true }
+            setState(NumberButtonState(color, 0.0, false, units, ""))
+        }
+        measureView(view, dpToPixels(48), dpToPixels(48))
+    }
+
+    @Test
+    fun testFormatValue() {
+        assertThat(0.1235.toShortString(), equalTo("0.12"))
+        assertThat(0.1000.toShortString(), equalTo("0.1"))
+        assertThat(5.0.toShortString(), equalTo("5"))
+        assertThat(5.25.toShortString(), equalTo("5.25"))
+        assertThat(12.3456.toShortString(), equalTo("12.3"))
+        assertThat(123.123.toShortString(), equalTo("123"))
+        assertThat(321.2.toShortString(), equalTo("321"))
+        assertThat(4321.2.toShortString(), equalTo("4.3k"))
+        assertThat(54321.2.toShortString(), equalTo("54.3k"))
+        assertThat(654321.2.toShortString(), equalTo("654k"))
+        assertThat(7654321.2.toShortString(), equalTo("7.7M"))
+        assertThat(87654321.2.toShortString(), equalTo("87.7M"))
+        assertThat(987654321.2.toShortString(), equalTo("988M"))
+        assertThat(1987654321.2.toShortString(), equalTo("2.0G"))
+    }
+
+    @Test
+    fun testRender_aboveThreshold() {
+        view.setState(NumberButtonState(color, 500.0, true, units, ""))
+        assertRenders(view, "$PATH/render_above.png")
+    }
+
+    @Test
+    fun testRender_atMostAboveThreshold() {
+        view.setState(NumberButtonState(color, 500.0, false, units, ""))
+        assertRenders(view, "$PATH/render_at_most_above.png")
+    }
+
+    @Test
+    fun testRender_belowThreshold() {
+        view.setState(NumberButtonState(color, 99.0, false, units, ""))
+        assertRenders(view, "$PATH/render_below.png")
+    }
+
+    @Test
+    fun testRender_atMostBetweenThresholds() {
+        view.setState(NumberButtonState(color, 110.0, false, units, ""))
+        assertRenders(view, "$PATH/render_at_most_between.png")
+    }
+
+    @Test
+    fun testRender_zero() {
+        view.setState(NumberButtonState(color, 0.0, false, units, ""))
+        assertRenders(view, "$PATH/render_zero.png")
+    }
+
+    @Test
+    fun testRender_atMostBelowThreshold() {
+        view.setState(NumberButtonState(color, 0.0, true, units, ""))
+        assertRenders(view, "$PATH/render_at_most_below.png")
+    }
+
+    @Test
+    fun testRender_emptyUnits() {
+        view.setState(NumberButtonState(color, 500.0, true, "", ""))
+        assertRenders(view, "$PATH/render_unitless.png")
+    }
+
+    @Test
+    fun testClick() {
+        view.performClick()
+        assertTrue(edited)
+    }
+
+    @Test
+    fun testLongClick() {
+        view.performLongClick()
+        assertTrue(edited)
+    }
+}
