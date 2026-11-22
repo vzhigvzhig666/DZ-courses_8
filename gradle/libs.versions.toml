@@ -15,6 +15,7 @@ jsr305 = "3.0.2"
 junit = "1.2.1"
 junitJupiter = "5.10.1"
 junitVersion = "4.13.2"
+kaspresso = "1.6.1"
 konfetti-xml = "2.0.2"
 kotlin = "2.3.20"
 ksp = "2.3.6"
@@ -49,6 +50,8 @@ jsr305 = { group = "com.google.code.findbugs", name = "jsr305", version.ref = "j
 junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 junit-junit = { module = "junit:junit", version.ref = "junitVersion" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
+kaspresso = { module = "com.kaspersky.android-components:kaspresso", version.ref = "kaspresso" }
+kaspresso-allure-support = { module = "com.kaspersky.android-components:kaspresso-allure-support", version.ref = "kaspresso" }
 konfetti-xml = { group = "nl.dionsegijn", name = "konfetti-xml", version.ref = "konfetti-xml" }
 kotlin-stdlib-jdk8 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "ktxCoroutine" }
